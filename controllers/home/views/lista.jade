@@ -1,0 +1,21 @@
+extends ../../../layouts/main
+
+block content
+	.welcome.sixteen.columns
+		h1.header Compra venta de articulos 
+		.intro 
+			p Si necesitas algo que no está en la lista ponte en contacto con nosotros y te lo encontraremos. Ponte cómodo y sirvete tu mismo.
+
+	- if (articulos)
+		- each articulo in articulos
+
+			.five.columns.articulo 
+				h3.header.enlace 
+					a(href="/articulo/" + articulo._id.toString()) #{articulo.titulo} 
+				a(href="/articulo/" + articulo._id.toString())
+					img(src='/photos/#{articulo.fotos[0]}')
+				h5 #{articulo.precio}€
+
+				- if (articulo.categorias)
+					- each categoria in articulo.categorias
+						a(href="/categoria/#{categoria}") #{categoria} 

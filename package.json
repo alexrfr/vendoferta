@@ -1,0 +1,49 @@
+{
+  "name": "vendoferta",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "dependencies": {
+    "express": "~3.3.5",
+    "jade": "*",
+    "mongoose": "*",
+    "nodemon": "*",
+    "nodemailer": "*",
+    "passport": "*",
+    "passport-local": "*",
+    "connect-flash": "~0.1.1",
+    "bcrypt-nodejs": "latest",
+    "logfmt": "~1.1.1"
+  },
+  "description": "Vendo Oferta ========================",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexrfr/vendoferta.git"
+  },
+  "keywords": [
+    "vendo",
+    "oferta",
+    "venta",
+    "segundamano",
+    "segunda",
+    "mano",
+    "usado",
+    "maquinaria",
+    "industrial",
+    "herramienta",
+    "herramientas"
+  ],
+  "author": "Alexander Rodriguez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexrfr/vendoferta/issues"
+  },
+  "homepage": "https://github.com/alexrfr/vendoferta"
+}

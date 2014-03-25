@@ -1,0 +1,63 @@
+doctype html
+html
+	head
+		// Basic Page Needs
+		meta(charset="utf-8") 
+		title= "Vendooferta | ofertas, rebajas, segundamano "
+		meta(name="description", content="Venta de ofertas")
+		meta(name="author", content="Alex")
+
+		// Mobile Specific Metas
+		meta(name='viewport', content="width=device-width, initial-scale=1, maximum-scale=1")
+
+		// CSS
+		link(rel='stylesheet', href='/stylesheets/base.css')
+		link(rel='stylesheet', href='/stylesheets/skeleton.css')
+		link(rel='stylesheet', href='/stylesheets/layout.css')
+
+		//Fonts google
+		<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+
+		// Libreria css bootstrap
+		link(rel='stylesheet', href='//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.0/css/bootstrap-combined.min.css')
+
+		// Favicons
+		link(rel='shortcut icon', href='/images/favicon.ico')
+		link(rel='apple-touch-icon', href='/images/apple-touch-icon.png')
+		link(rel='apple-touch-icon', sizes='72x72',href='/images/apple-touch-icon-72x72.png')
+		link(rel='apple-touch-icon', sizes='114x114',href='/images/apple-touch-icon-114x114.png')
+
+	body
+
+		.container
+
+			// #headerImage.sixteen.columns.scale-with-grid 
+				// img(src='/images/field.jpg')
+
+			.headerText.sixteen.columns vendOferta
+			
+			.sixteen.columns
+					ul.menu
+						li.menu-item
+							a(href="/") Compra 
+						li.menu-item
+							a(href="/vende") Vende 
+						li.menu-item
+							a(href="/somos") Nosotros 
+						li.menu-item
+							a(href="/contacto") Contacto 
+						li.menu-item
+							a(href="/admin") Login 
+
+			.sixteen.columns
+				block content
+
+			.sixteen.columns.section
+				.footer
+					a(href="/") 
+						img.izquierda(src='/images/inicio.png', alt='Ir al inicio')
+
+					p © 2014 Vendoferta
+
+					a(href="#top") 
+						img.derecha(src='/images/up.png', alt='Vuelta arriba')

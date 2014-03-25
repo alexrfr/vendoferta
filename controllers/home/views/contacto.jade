@@ -1,0 +1,37 @@
+extends ../../../layouts/main
+
+block content
+	.sixteen.columns.center
+		h3.header Datos de contacto
+
+		p Telefono: 666 666 666
+		p Direccion: Irun
+
+	.sixteen.columns
+		h3.header Formulario de contacto
+
+	.two.columns
+		p #{msg}
+
+	.upload-form.fifteen.columns.center
+		form(action='/contacto', name='contacto', id='contacto', method='post')
+				p
+					label(for='name') Nombre:
+
+					input(name='name' type='text' required)
+				p
+					label(for='email') Email:
+
+					input(name='email' type='email' required placeholder="Debes introducir una dirección de email valida")
+				p
+					label(for='mensaje') Mensaje:
+
+					textarea(name='mensaje' cols='40' rows='10' required)
+				p
+					input(name='submit' type='submit' value='Enviar')
+
+if(typeof msg !== 'undefined')
+	if(!!err)
+		div(class='msgbox err') #{msg}
+	else
+		div(class='msgbox success') #{msg}
