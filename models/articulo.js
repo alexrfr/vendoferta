@@ -12,6 +12,5 @@ module.exports = function(mongoose) {
     videos: Array
  
   });
- 
   return mongoose.model('Articulo', ArticuloSchema);
 }
