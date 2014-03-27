@@ -4,6 +4,7 @@
  */
 var express = require('express');
 var http = require('http');
+var logfmt = require('logfmt');
 var path = require('path');
 require('./models');
 
@@ -14,10 +15,11 @@ var home = require('./controllers/home');
 var articulo = require('./controllers/articulo');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/layouts');
 app.set('photos', __dirname + '/public/photos');
 app.set('view engine', 'jade');
+app.use(logfmt.requestLogger());
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + "/public/tmpPhotos" }));
