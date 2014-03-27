@@ -20,7 +20,7 @@ app.set('views', __dirname + '/layouts');
 app.set('photos', __dirname + '/public/photos');
 app.set('view engine', 'jade');
 app.use(logfmt.requestLogger());
-app.use(express.favicon());
+app.use(express.favicon(/public/images/favicon.ico));
 app.use(express.logger('dev'));
 app.use(express.bodyParser({ keepExtensions: true, uploadDir: __dirname + "/public/tmpPhotos" }));
 app.use(express.methodOverride());
