@@ -56,7 +56,7 @@ app.post('/contacto', function (req, res) {
   smtpTransport = nodemailer.createTransport('SMTP', {
       service: 'Gmail',
       auth: {
-          user: "vendofertaweb@gmail.com",
+          user: "contacto@vendoferta.com",
           pass: "nxwoxcjipmihpsvu" 
           //pass: "687rivera" 
       }
