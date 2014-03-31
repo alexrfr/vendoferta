@@ -5,8 +5,8 @@ if (!global.hasOwnProperty('db')) {
 	var dbName = 'vendoferta'
 
 	var uristring =
-	process.env.MONGOLAB_URI ||
-	process.env.MONGOHQ_URL ||
+	//process.env.MONGOLAB_URI ||
+	//process.env.MONGOHQ_URL ||
 	'mongodb://heroku_app23353677:akulk5943aorm4rkn2dhbmq1vo@ds031628.mongolab.com:31628/heroku_app23353677';
 	//'mongodb://localhost/' + dbName;
 
