@@ -73,7 +73,7 @@ app.post('/admin/articulo', isLoggedIn, function(request, response) {
   var newArticulo = new db.Articulo({
     titulo : u.titulo,
     descripcion : u.descripcion,
-    categorias: u.categorias.split(" "),
+    // categorias: u.categorias.split(" "),
     precio: u.precio,
     fotos: arrayImagenes,
     videos: u.videos
@@ -134,7 +134,7 @@ app.put('/admin/articulo/:id', isLoggedIn, function(request, response){
     }
   }
 
-  articulo.categorias= articulo.categorias.split(" ");
+  // articulo.categorias= articulo.categorias.split(" ");
   articulo.fotos = arrayImagenes;
 
   delete articulo.id;

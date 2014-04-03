@@ -1,12 +1,6 @@
 extends ../../../layouts/main
 
 block content
-	.sixteen.columns.center
-		h3.header Datos de contacto
-
-		p Telefono: 687 725 202
-		p Email: contacto@vendoferta.com
-
 	.sixteen.columns
 		h3.header Formulario de contacto
 
@@ -30,6 +24,12 @@ block content
 				p
 					input(name='submit' type='submit' value='Enviar')
 
+	.sixteen.columns.center
+		h3.header Datos de contacto
+
+		p Telefono: 687 725 202
+		p Email: contacto@vendoferta.com
+		
 if(typeof msg !== 'undefined')
 	if(!!err)
 		div(class='msgbox err') #{msg}
