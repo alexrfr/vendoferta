@@ -13,8 +13,8 @@ results
 
 npm-debug.log
 node_modules/
-# public/photos/
-# public/tmpPhotos/
+public/photos/
+public/tmpPhotos/
 
 # Mac OS X
 .DS_Store
