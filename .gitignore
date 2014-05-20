@@ -12,7 +12,20 @@ logs
 results
 
 npm-debug.log
-node_modules
-public/photos/**
-public/tmpPhotos/**
+node_modules/
+public/photos/
+public/tmpPhotos/
+
+# Mac OS X
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# sublimetext
+/*.sublime-project
+*.sublime-workspace
 
