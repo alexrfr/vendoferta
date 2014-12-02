@@ -69,7 +69,8 @@
     .container .offset-by-fourteen              { padding-left: 840px; }
     .container .offset-by-fifteen               { padding-left: 900px; }
 
-
+    /* Alex - Para que las imagenes verticales no descuadre la tabla */
+    .container .five.columns.articulo          { height: 353px;}
 
 /* #Tablet (Portrait)
 ================================================== */

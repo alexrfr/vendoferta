@@ -8,9 +8,7 @@ module.exports = function(mongoose) {
     descripcion : String,
     categorias: Array,
     precio: Number,
-    fotos: Array,
-    videos: Array
- 
+    fotos: Array
   });
   return mongoose.model('Articulo', ArticuloSchema);
 }

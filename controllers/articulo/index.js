@@ -3,7 +3,8 @@ var express = require('express')
   , app = module.exports = express()
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , flash = require('connect-flash');
+  , flash = require('connect-flash')
+  , AWS = require('aws-sdk'); 
 
 require('./../config/passport')(passport); // pass passport for configuration
 
@@ -14,6 +15,10 @@ app.use(express.session({ secret: 'ilovealexalexalexalexalexalex' })); // sessio
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
+
+AWS.config.loadFromPath('./controllers/config/s3.json');
+var s3 = new AWS.S3();
+var S3_BUCKET = 'vendofertaweb';
 
 // mueve las fotos a la carpeta /public/photos
 // =====================================
@@ -32,9 +37,13 @@ function moverImagen(element, index, array){
     if(format[1] === "jpg" || format[1] === "jpeg" || format[1] === "dng"
       || format[1] === "png" || format[1] === "gif"){
 
-      fs.rename(tmp_path, target_path, function(err){
-        if(err) response.send("Ocurrio un error al intentar subir la imagen" + name + " ERROR: "+ err);
-      });
+// =====================================
+    uploadFile(file, S3_BUCKET);
+// =====================================
+
+      // fs.rename(tmp_path, target_path, function(err){
+      //   if(err) response.send("Ocurrio un error al intentar subir la imagen" + name + " ERROR: "+ err);
+      // });
     }else if(format[1] === "octet-stream"){ // Al actualizar se carga una imagen que no lo es
       fs.unlink(tmp_path);
     }else{
@@ -75,8 +84,8 @@ app.post('/admin/articulo', isLoggedIn, function(request, response) {
     descripcion : u.descripcion,
     // categorias: u.categorias.split(" "),
     precio: u.precio,
-    fotos: arrayImagenes,
-    videos: u.videos
+    //videos: u.videos,
+    fotos: arrayImagenes
   });
 
   newArticulo.save(function(error, articulo) {
@@ -90,7 +99,7 @@ app.post('/admin/articulo', isLoggedIn, function(request, response) {
 // =====================================
 // Muestra la lista de articulos editables
 app.get('/admin/articulo', isLoggedIn, function(request, response) {
-  db.Articulo.find().exec(function (error, articulos) {
+  db.Articulo.find().sort( { titulo: 1 } ).exec(function (error, articulos) {
     if (error) return response.json(error);
     return response.render('index', {
       articulos: articulos
@@ -159,12 +168,13 @@ app.get('/admin/articulo/delete/:id', isLoggedIn, function(request, response){
   db.Articulo.findById(articuloId, function(error, articulo){
     if (error) response.json(error);
 
-    for( var i=0; i<articulo.fotos.length; i++){
-      foto = articulo.fotos[i]
-      fs.unlink(foto_path + foto);
-      console.log('successfully deleted photo: ' + foto);
+    if (articulo.fotos){
+      for( var i=0; i<articulo.fotos.length; i++){
+        foto = articulo.fotos[i]
+        fs.unlink(foto_path + foto);
+        console.log('successfully deleted photo: ' + foto);
+      }
     }
-
   });
 
   db.Articulo.findByIdAndRemove(articuloId, function(error, articulo){
@@ -203,21 +213,18 @@ app.get('/admin/articulo/delete/foto/:id-:foto', isLoggedIn, function(request, r
       foto = request.params.foto,
       photo_path = __dirname + "/../../public/photos/" + foto;
 
-  fs.unlink(photo_path, function (err) {
-  if (err) throw err;
+  deleteFile(foto, S3_BUCKET);
 
-    db.Articulo.update(
-      { _id: articuloId },
-      { 
-          $pullAll: { fotos : [foto] }
-      }, function(error, articulo){
-        if (error) return response.json(error);
-        console.log('successfully deleted' + photo_path);
-        response.redirect('/admin/articulo/edit/'+articuloId);
-      }
-    );
-
-  });
+  db.Articulo.update(
+    { _id: articuloId },
+    { 
+        $pullAll: { fotos : [foto] }
+    }, function(error, articulo){
+      if (error) return response.json(error);
+      console.log('successfully deleted' + photo_path);
+      response.redirect('/admin/articulo/edit/'+articuloId);
+    }
+  );
 
 });
 
@@ -269,4 +276,53 @@ function isLoggedIn(req, res, next) {
 
   // if they aren't redirect them to the home page
   res.redirect('/');
+}
+
+// =====================================
+// S3 - CREATEBUCKET ===================
+// =====================================
+// Crea una carpeta en S3
+function createBucket(bucketName) {
+  s3.createBucket({Bucket: bucketName}, function() {
+    console.log('created the bucket[' + bucketName + ']');
+    console.log(arguments);
+  });
+} 
+
+// =====================================
+// S3 - UPLOADFILE =====================
+// =====================================
+// Sube un elemento a la carpeta indicada en S3
+function uploadFile(element, bucketName) {
+  console.log('S3 UPLOADER : file[' + filename + ']');
+
+  var file = element,
+    filename = file.name.replace(/\s/g,''),
+    tmp_path = file.path;
+
+  var stream = fs.createReadStream(tmp_path);
+
+  //Antes estaba así:  s3.client.putObject() pero fallaba
+  s3.putObject({Bucket: bucketName, Key: filename, Body: stream, ACL: 'public-read'}).
+    on('complete', function() { 
+      console.log('S3 UPLOADER : Uploaded file[' + filename + ']'); 
+      console.log(arguments); 
+      fs.unlink(tmp_path);
+    }).send();
+}
+
+// =====================================
+// S3 - DELETEFILE =====================
+// =====================================
+// Elimina un elemento de la carpeta indicada en S3
+
+function deleteFile(key, bucketName) {
+  var params = {Bucket: bucketName, Key: key};
+
+  s3.deleteObject(params, function(err){
+    if (!!err) {
+        console.log('S3 DELETER : Error deleting file[' + key + ']');
+    }
+    console.log('S3 DELETER : Deleted file[' + key + ']');
+  });
 }

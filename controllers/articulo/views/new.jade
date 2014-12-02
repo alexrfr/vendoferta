@@ -3,9 +3,9 @@ extends ../../../layouts/admin
 block content
 
 	.twelve.columns
-		h1 Nuevo articulo
+		h1.center Nuevo articulo
 
-	.upload-form.eight.columns
+	.upload-form.twelve.columns
 		form(method="POST", action="/admin/articulo" enctype="multipart/form-data")
 			if locals.message
 				img(src='#{message}', alt='')
@@ -13,9 +13,11 @@ block content
 				label(for="titulo") Titulo:
 				input(type="text" name="titulo")
 
-			p 
+			p
 				label(for="descripcion") Descripcion:
-				textarea(name="descripcion")
+				textarea(name="descripcion" id="descripcion")
+				script.
+					CKEDITOR.replace( 'descripcion' );
 
 			//- p 
 			//-	label(for="categorias") Categorias:
@@ -25,9 +27,9 @@ block content
 				label(for="precio") Precio:
 				input(type="number" name="precio")
 
-			p 
-				label(for="videos") Videos:
-				input(type="text" name="videos")
+			//- p 
+			//- 	label(for="videos") Videos:
+			//- 	input(type="text" name="videos")
 			
 			p 
 				label(for="image") Fotos:

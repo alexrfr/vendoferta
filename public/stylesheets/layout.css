@@ -202,6 +202,18 @@ color: #fff;
     background: #14a8d1; 
 }
 
+.shadow {
+	-moz-box-shadow: 5px 5px 5px #ccc;
+	-webkit-box-shadow: 5px 5px 5px #ccc;
+	box-shadow: 5px 5px 5px #ccc;
+}
+
+.center{
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 /* #Page Styles
 ================================================== */
 	.headerText{
@@ -212,10 +224,9 @@ color: #fff;
 		line-height: 1;
 		font-size: 4.8em;
 		padding-bottom: 10px;
-		background: url('/images/headerBackground.jpg') repeat-x bottom;
-		background-size:50px 50px;
+		/* background: url('/images/headerBackground.jpg') repeat-x bottom; 
+		background-size:45px 25px; */
 	}
-
 
 	.header {
 		color: #383838;
@@ -284,20 +295,82 @@ color: #fff;
 /* #Media Queries
 ================================================== */
 
+	.headerText::before{
+		content:url('/images/cesped-izq.jpg');
+	  	margin-right: 10px;
+	}
+
+	.headerText::after{
+        content:url('/images/cesped-der.jpg');
+        margin-left: 10px;
+    }
+
 	/* Smaller than standard 960 (devices and browsers) */
-	@media only screen and (max-width: 959px) {}
+	@media only screen and (max-width: 959px) {
+		.headerText::before{
+			content:url('/images/cesped-izq.jpg');
+		  	margin-right: 10px;
+		}
+
+		.headerText::after{
+	        content:url('/images/cesped-der.jpg');
+        	margin-left: 10px;
+	    }
+	}
 
 	/* Tablet Portrait size to standard 960 (devices and browsers) */
-	@media only screen and (min-width: 768px) and (max-width: 959px) {}
+	@media only screen and (min-width: 768px) and (max-width: 959px) {
+		/* Alex - Para que las imagenes verticales no descuadre la tabla */
+        .container .five.columns img                { max-width: 220px; max-height: 147px;}
+        .container .five.columns.articulo          { height: 353px;}
+
+        .headerText::before{
+			content:url('/images/cesped-izq.jpg');
+		  	margin-right: 10px;
+		}
+
+        .headerText::after{
+	        content:url('/images/cesped-der.jpg');
+        	margin-left: 10px;
+	    }
+	}
 
 	/* All Mobile Sizes (devices and browser) */
-	@media only screen and (max-width: 767px) {}
+	@media only screen and (max-width: 767px) {
+		.headerText::after, .headerText::before{
+	        content:"";
+	    }
+
+	    .headerText{
+	    	background: url('/images/headerBackground.jpg') repeat-x bottom; 
+			background-size:45px 25px;
+	    }
+	}
 
 	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+	@media only screen and (min-width: 480px) and (max-width: 767px) {
+		.headerText::after, .headerText::before{
+	        content:"";
+	    }
+
+	    .headerText{
+	    	background: url('/images/headerBackground.jpg') repeat-x bottom; 
+			background-size:45px 35px;
+	    }
+	}
 
 	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-	@media only screen and (max-width: 479px) {}
+	@media only screen and (max-width: 479px) {
+		.headerText::after, .headerText::before{
+	        content:"";
+	    }
+
+	    .headerText{
+	    	background: url('/images/headerBackground.jpg') repeat-x bottom; 
+			background-size:45px 25px;
+			line-height: 20px;
+	    }
+	}
 
 
 /* #Font-Face

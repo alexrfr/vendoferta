@@ -12,9 +12,11 @@ block content
 				label(for="titulo") Titulo:
 				input(type="text" name="titulo" value=titulo)
 
-			p 
+			p
 				label(for="descripcion") Descripcion:
-				input(type="text" name="descripcion" value=descripcion)
+				textarea(name="descripcion" id="descripcion") !{descripcion}
+				script.
+					CKEDITOR.replace( 'descripcion' );
 
 			//- p 
 			//-	label(for="categorias") Categorias:
@@ -25,9 +27,9 @@ block content
 				label(for="precio") Precio:
 				input(type="number" name="precio" value=precio)
 
-			p 
-				label(for="videos") Video:
-				input(type="text" name="videos" value=videos)
+			//- p 
+			//- 	label(for="videos") Video:
+			//- 	input(type="text" name="videos" value=videos)
 
 			p 
 				label(for="image") Fotos:
@@ -36,11 +38,13 @@ block content
 			- if (fotos)
 				- each foto in fotos
 					a(href="/admin/articulo/delete/foto/" + _id.toString() + "-" + foto onClick="return confirm('¿Estas seguro de que quieres eliminar la foto?')") 
-						img.three.columns(src='/photos/#{foto}')
+						img.three.columns(src='https://s3-us-west-2.amazonaws.com/vendofertaweb/#{foto}')
 
 			- var fotosSinEspacio = fotos.join(' ')
 			input(type="hidden" name="arrayfotos" value=fotosSinEspacio)
 			input(type="hidden" name="_method" value="put")
 
-			p
+			br
+			br
+			p.seven.columns
 				button(type="submit") Actualizar

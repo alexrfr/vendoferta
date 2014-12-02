@@ -17,7 +17,6 @@ var articulo = require('./controllers/articulo');
 // all environments
 app.set('port', process.env.PORT || 5000);
 app.set('views', __dirname + '/layouts');
-app.set('photos', __dirname + '/public/photos');
 app.set('view engine', 'jade');
 app.use(logfmt.requestLogger());
 app.use(express.favicon('/public/images/favicon.ico'));
